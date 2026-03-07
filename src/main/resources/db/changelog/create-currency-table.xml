@@ -16,4 +16,10 @@
         </createTable>
     </changeSet>
 
+    <changeSet id="add_iso_char_code_column" author="skillbox">
+        <addColumn tableName="currency">
+            <column name="iso_char_code" type="varchar(3)"/>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>

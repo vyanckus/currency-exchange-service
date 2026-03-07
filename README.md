@@ -30,8 +30,10 @@
 ### Запуск контейнера с базой данных
 
 ```bash
-docker run -p 5432:5432 --name postgres -e POSTGRES_PASSWORD=postgres -d postgres
+docker run -p 5433:5432 --name postgres -e POSTGRES_PASSWORD=postgres -d postgres
 ```
+
+**Важно:** В проекте используется порт 5433 для PostgreSQL, чтобы избежать конфликта с локально установленной БД.
 
 Пользователь для подключения к контейнеру `postgres`.
 
