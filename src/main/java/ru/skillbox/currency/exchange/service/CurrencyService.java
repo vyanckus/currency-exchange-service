@@ -4,9 +4,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.skillbox.currency.exchange.dto.CurrencyDto;
+import ru.skillbox.currency.exchange.dto.CurrencyShortDto;
 import ru.skillbox.currency.exchange.entity.Currency;
 import ru.skillbox.currency.exchange.mapper.CurrencyMapper;
 import ru.skillbox.currency.exchange.repository.CurrencyRepository;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -30,5 +36,17 @@ public class CurrencyService {
     public CurrencyDto create(CurrencyDto dto) {
         log.info("CurrencyService method create executed");
         return  mapper.convertToDto(repository.save(mapper.convertToEntity(dto)));
+    }
+
+    public Map<String, List<CurrencyShortDto>> getAllCurrencies() {
+        log.info("CurrencyService method getAllCurrencies executed");
+        List<Currency> currencies = repository.findAll();
+        List<CurrencyShortDto> shortDtos = currencies.stream()
+                .map(currency -> new CurrencyShortDto(currency.getName(), currency.getValue()))
+                .collect(Collectors.toList());
+
+        Map<String, List<CurrencyShortDto>> response = new HashMap<>();
+        response.put("currencies", shortDtos);
+        return response;
     }
 }
